@@ -1,117 +1,93 @@
-<!-- FORMULARGENERATOR -->
+<html>
+  <head></head>
+  <body>
+    <!--
+    BEFORE RUNNING:
+    ---------------
+    1. If not already done, enable the Google Sheets API
+       and check the quota for your project at
+       https://console.developers.google.com/apis/api/sheets
+    2. Get access keys for your application. See
+       https://developers.google.com/api-client-library/javascript/start/start-js#get-access-keys-for-your-application
+    3. For additional information on authentication, see
+       https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
+    -->
+    <script>
+    function makeApiCall() {
+      var params = {
+        // The ID of the spreadsheet to retrieve data from.
+        spreadsheetId: '1vZBIYymZI-Ujte4_CWc-q1g4f9McWlO1PaI3sZgqdeY',  // TODO: Update placeholder value.
 
-<script type="text/javascript" src="/modules/formulargenerator/render2014.js?ver=17"></script>
+        // The A1 notation of the values to retrieve.
+        range: 'Sheet1',  // TODO: Update placeholder value.
 
-<div class="formulargenerator formulargenerator2014" id="renderform">
-<!-- No Opt-In -->
+        // How values should be represented in the output.
+        // The default render option is ValueRenderOption.FORMATTED_VALUE.
+        // valueRenderOption: '',  // TODO: Update placeholder value.
 
-    <div class="formulargenerator_items">    
-    <input type="hidden" name="fid" value="test1" />
-<script type="text/javascript">var aufklapphandler_data = [];</script><script type="text/javascript">var pflichthandler_data = [];</script>
+        // How dates, times, and durations should be represented in the output.
+        // This is ignored if value_render_option is
+        // FORMATTED_VALUE.
+        // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+        // dateTimeRenderOption: '',  // TODO: Update placeholder value.
+      };
 
-<div id="item1" class="item item_wrap_html item_ item_html_ ">
-<div class="html item_wrap">
+      var request = gapi.client.sheets.spreadsheets.values.get(params);
+      request.then(function(response) {
+        // TODO: Change code below to process the `response` object:
+        console.log(response.result);
+      }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+      });
+    }
 
-</div></div></div>
+    function initClient() {
+      var API_KEY = 'AIzaSyCMlOmpg8heduS6F6XcmIZN9gKPj1EcexA';  // TODO: Update placeholder with desired API key.
 
-<div id="item2" class="item item_wrap_html item_ item_html_ ">
-<label id="label" for="input_item2">Informationen anfordern</label>
-<div class="html item_wrap">
-<div class="html_out">Ich will eine Essensbestellung aufgeben.</div></div></div>
+      var CLIENT_ID = '';  // TODO: Update placeholder with desired client ID.
 
+      // TODO: Authorize using one of the following scopes:
+      //   'https://www.googleapis.com/auth/drive'
+      //   'https://www.googleapis.com/auth/drive.file'
+      //   'https://www.googleapis.com/auth/drive.readonly'
+      //   'https://www.googleapis.com/auth/spreadsheets'
+      //   'https://www.googleapis.com/auth/spreadsheets.readonly'
+      var SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 
-<div id="item3" class="item item_wrap_input_radio item_standard item_input_radio_standard pflichtfeld">
-<label id="labelanrede" for="input_item3">Anrede</label>
-<div class="input_radio item_wrap">
-<div class="labelwrap">
-<input  data-limit-opt="0" data-limit-counter="" class="" id="input_item3_geehrte_Frau" type="radio" name="anrede" value="geehrte Frau"  />
- <label for="input_item3_geehrte_Frau">Frau</label></div>
-<div class="labelwrap">
-<input  data-limit-opt="0" data-limit-counter="" class="" id="input_item3_geehrter_Herr" type="radio" name="anrede" value="geehrter Herr"  />
- <label for="input_item3_geehrter_Herr">Herr</label></div>
-</div></div>
+      gapi.client.init({
+        'apiKey': API_KEY,
+        'clientId': CLIENT_ID,
+        'scope': SCOPE,
+        'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+      }).then(function() {
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+        updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      });
+    }
 
+    function handleClientLoad() {
+      gapi.load('client:auth2', initClient);
+    }
 
+    function updateSignInStatus(isSignedIn) {
+      if (isSignedIn) {
+        makeApiCall();
+      }
+    }
 
-<div id="item4" class="item item_wrap_input_text item_einzeilig_halb item_input_text_einzeilig_halb pflichtfeld">
-<label id="labelvorname" for="input_item4">Vorname, Name</label>
-<div class="input_text item_wrap">
-<input  id="input_item4"  class="input_einzeilig_halb " data-validation="0" type="text" name="vorname" value="" maxlength=255 />
-<span class="einzeilig_input_text item_wrap">&nbsp;-&nbsp;</span><input  id="input_item5"  class="input_einzeilig_halb " data-validation="0" type="text" name="name" value="" maxlength=255 />
-</div></div>
+    function handleSignInClick(event) {
+      gapi.auth2.getAuthInstance().signIn();
+    }
 
-
-
-<div id="item6" class="item item_wrap_input_text item_einzeilig_kurz item_input_text_einzeilig_kurz pflichtfeld">
-<label id="labelemail" for="input_item6">E-Mail</label>
-<div class="input_text item_wrap">
-<input  id="input_item6"  class="input_einzeilig_kurz " data-validation="0" type="text" name="email" value="" maxlength=255 />
-</div></div>
-
-
-
-<div id="item7" class="item item_wrap_input_checkbox item_standard item_input_checkbox_standard ">
-<label id="labelpostweg" for="input_item7"> Check 111 </label>
-<div class="input_checkbox item_wrap">
-<div class="labelwrap">
-<input  class="input_postweg " id="input_item7_ja" type="checkbox" name="postweg[]" value="ja"  />
- <label for="input_item7_ja">ja</label></div>
-</div></div>
-
-
-
-<div id="item8" class="item item_wrap_input_text item_einzeilig_lang item_input_text_einzeilig_lang ">
-<label id="labelstrasse" for="input_item8">Straﬂe, Hausnr.</label>
-<div class="input_text item_wrap">
-<input  id="input_item8"  class="input_einzeilig_lang " data-validation="0" type="text" name="strasse" value="" maxlength=255 />
-<span class="einzeilig_input_text item_wrap">&nbsp;- &nbsp;</span><input  id="input_item9"  class="input_einzeilig_kurz " data-validation="0" type="text" name="hausnummer" value="" maxlength=255 />
-</div></div>
-
-
-
-<div id="item10" class="item item_wrap_input_text item_einzeilig_lang item_input_text_einzeilig_lang ">
-<label id="labelplz" for="input_item10">PlZ, Ort</label>
-<div class="input_text item_wrap">
-<input  id="input_item10"  class="input_einzeilig_lang " data-validation="0" type="text" name="plz" value="" maxlength=255 />
-<span class="einzeilig_input_text item_wrap">&nbsp;- &nbsp;</span><input  id="input_item11"  class="input_einzeilig_kurz " data-validation="0" type="text" name="ort" value="" maxlength=255 />
-</div></div>
-
-
-
-<div id="item12" class="item item_wrap_input_text item_standard item_input_text_standard ">
-<label id="labeltelefonnr" for="input_item12">Telefonnummer</label>
-<div class="input_text item_wrap">
-<input  id="input_item12"  class="input_standard " data-validation="0" type="text" name="telefonnr" value="" maxlength=255 />
-</div></div>
-
-
-
-<div id="item13" class="item item_wrap_html item_ item_html_ ">
-<div class="html item_wrap">
-<div class="html_out">*=Pflichtfeld</div></div></div>
-
-
-
-<div id="item14" class="item item_wrap_datenschutz item_ item_datenschutz_ ">
-<div class="datenschutz item_wrap">
-<div class="html_out">Datenschutzhinweise</a><br><br></div></div></div>
-
-
-
-<div id="item15" class="item item_wrap_buttons item_ item_buttons_ ">
-<div class="buttons item_wrap">
-<div class="submit">
-                            <input class="print_button blue" type="button" name="print" value="Drucken" onclick="window.print()" />
-                            <input class="submit_button blue" type="submit" name="submit" value="Abschicken" />
-                            <!-- <input class="reset_button blue" type="reset" name="reset" value="Zur¸cksetzen" /> -->
-                        </div></div></div>
-
-<style type="text/css">.ui-autocomplete { z-index: 99999; }</style>    </form>
-</div> 
-<!--/formulargenerator_items-->
-
-</div><!--/formulargenerator-->
-<!-- /FORMULARGENERATOR -->
-
-
-
+    function handleSignOutClick(event) {
+      gapi.auth2.getAuthInstance().signOut();
+    }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+  </body>
+</html>
